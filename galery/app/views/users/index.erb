@@ -1,0 +1,40 @@
+<div class="container pt-5">
+    <div class="col-lg-12 col-md-12">
+        <div class="d-flex w-100 mt-3">
+            <% @users.each do |user| %>
+                
+                <% if user.id != @user.id %>
+                    <div class="card w-25 m-3">
+                    <div class="card-body"> 
+                        <p class="card-text"><%=user.name%></p>  
+                        <hr>
+                         
+                        <% if user.friend_check(@user.id)  || @user.friend_check(user.id) %>
+                            
+                            <% if user.friend_check(@user.id) && user.friend_check(@user.id).confirm? || @user.friend_check(user.id) && @user.friend_check(user.id).confirm?%>
+                                <span class="btn btn-outline-success">Friend</span>
+
+                                <a href="/home/<%= user.id %>" class="float-right btn btn-sm btn-outline-warning">See galery</a>
+                            <% else %>
+                                
+                                <% if user.friend_check(@user.id) %>
+                                    <a href="/friend-request/update/<%= user.id %>" class="btn btn-outline-success">Confirm</a>
+                                <% else %>
+                                    <span class="btn btn-outline-warning">Pending</span>
+                                <% end %>
+                                
+                            <% end %>
+                        <% else %>
+                            <a href="/friend-request/<%= user.id %>" class="btn btn-outline-info"> Send request</a>
+                        <% end %>
+
+                         
+                    </div>
+                <% end %>
+                
+                
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
